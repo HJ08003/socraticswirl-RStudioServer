@@ -1,0 +1,42 @@
+---
+title: "Socratic Swirl"
+author: "Dima Gorenshteyn and David Robinson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r}
+library(knitr)
+opts_chunk$set(eval = FALSE)
+```
+
+### Usage
+
+Your instructor will give you a line of code to run within your R terminal, which will register your SocraticSwirl session so that it knows what lesson you are taking and who your instructor is. It will look something like this:
+
+```{r}
+library(socraticswirl)
+socratic_swirl("linear regression", instructor = "instructors name")
+```
+
+After that, you can take any individual exercise, whenever the instructor prompts you, with a single line of R code. To take the first exercise in a session, do:
+
+```{r}
+exercise(1)
+```
+
+To take the third exercise, you would do:
+
+```{r}
+exercise(3)
+```
+
+It's that simple!
+
+### FAQs
+
+* **Are my answers submitted anonymously?** Yes! You are granted an anonymous ID that distinguishes your answers, but there is no way for your instructor or anyone else to match it back to your name or any other identifying information.
