@@ -79,13 +79,13 @@ socratic_swirl <- function(course, lesson) {
   course <- toupper(course)
   lesson <- toupper(lesson)
   student <- as.character(Sys.info()["effective_user"])
-  instructor <- SocraticswirlRStudioServerInstructor
+  instructor <- getOption("SocraticswirlRStudioServer")$Instructor
   instructor_user <- list(objectId = "1234567")
 
   message("Installing course ", course)
 
   # Install the course directly from the file system
-  install_course_directory(paste0(SocraticswirlRStudioServerCourseFolder, "/", course))
+  install_course_directory(paste0(getOption("SocraticswirlRStudioServer")$CourseFolder, "/", course))
   
   # check that lesson exists in the directory
   course_name <- stringr::str_replace_all(course, " ", "_")
@@ -246,7 +246,7 @@ notify_socratic_swirl <- function(e, correct = TRUE) {
 }
 
 set_object_Directory <- function(course, lesson, student) {
-  BaseDirectory <- SocraticswirlRStudioServerRecordFolder
+  BaseDirectory <- getOption("SocraticswirlRStudioServer")$RecordFolder
   if (! dir.exists(file.path(BaseDirectory, student))) {
     dir.create(file.path(BaseDirectory, student))
   }
@@ -264,11 +264,11 @@ set_object_Directory <- function(course, lesson, student) {
 write_object_StudentResponse <- function(task, course, lesson, exercise, instructor, isCorrect, isError, errorMsg, command, student, ACL) {
   if (task == "StudentResponse") {
     dt <- date()
-    BaseDirectory <- file.path(SocraticswirlRStudioServerRecordFolder, student, course, lesson)
+    BaseDirectory <- file.path(getOption("SocraticswirlRStudioServer")$RecordFolder, student, course, lesson)
     a <- c(course, lesson, exercise, student, instructor, dt, isCorrect, isError, command, errorMsg)
     names(a) <- c("Course", "Lesson", "Exercise", "Student", "Instructor", "Date", "isCorrect", "isError", "Command", "ErrorMassage")
     set_object_Directory(course, lesson, student)
-    filename <- paste0(paste(instructor, task, gsub(" ", ":", dt), sep = "-"), ".tsv")
+    filename <- paste0(paste(task, gsub(" ", ":", dt), sep = "-"), ".tsv")
     write.table(t(a), file = file.path(BaseDirectory, filename), row.names=FALSE, sep="\t", quote = FALSE)
     # print(paste(course, lesson, exercise, student, instructor, date(), isCorrect, isError, command, errorMsg, ACL, sep = "\t"))
   } else {
@@ -279,11 +279,11 @@ write_object_StudentResponse <- function(task, course, lesson, exercise, instruc
 write_object_StudentQuestion <- function(task, course, lesson, instructor, student, question, addressed, ACL) {
   if (task == "StudentQuestion") {
     dt <- date()
-    BaseDirectory <- file.path(SocraticswirlRStudioServerRecordFolder, student, course, lesson)
+    BaseDirectory <- file.path(getOption("SocraticswirlRStudioServer")$RecordFolder, student, course, lesson)
     a <- c(course, lesson, student, instructor, dt, question, addressed)
     names(a) <- c("Course", "Lesson", "Student", "Instructor", "Date", "Question", "Addressed")
     set_object_Directory(course, lesson, student)
-    filename <- paste0(paste(instructor, task, gsub(" ", ":", dt), sep = "-"), ".tsv")
+    filename <- paste0(paste(task, gsub(" ", ":", dt), sep = "-"), ".tsv")
     write.table(t(a), file = file.path(BaseDirectory, filename), row.names=FALSE, sep="\t", quote = FALSE)
     # print(paste(course, lesson, student, instructor, date(), question, addressed, ACL, sep = "\t"))
   } else {
@@ -294,11 +294,11 @@ write_object_StudentQuestion <- function(task, course, lesson, instructor, stude
 write_object_StudentSession <- function(task, course, lesson, instructor, student, ACL) {
   if (task == "StudentSession") {
     dt <- date()
-    BaseDirectory <- file.path(SocraticswirlRStudioServerRecordFolder, student, course, lesson)
+    BaseDirectory <- file.path(getOption("SocraticswirlRStudioServer")$RecordFolder, student, course, lesson)
     a <- c(course, lesson, student, instructor, dt)
     names(a) <- c("Course", "Lesson", "Student", "Instructor", "Date")
     set_object_Directory(course, lesson, student)
-    filename <- paste0(paste(instructor, task, gsub(" ", ":", dt), sep = "-"), ".tsv")
+    filename <- paste0(paste(task, gsub(" ", ":", dt), sep = "-"), ".tsv")
     write.table(t(a), file = file.path(BaseDirectory, filename), row.names=FALSE, sep="\t", quote = FALSE)
     # print(paste(course, lesson, student, instructor, date(), ACL, sep = "\t"))
   } else {

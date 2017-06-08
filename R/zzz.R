@@ -24,6 +24,17 @@
   invisible()
 }
 
+.onLoad <- function(libname, pkgname) {
+  rstudioserver <- list(
+    Instructor = "FSI2017",
+    CourseFolder = "/Users/hubertj/Desktop/NewProject/SocraticSwirl/socraticswirlInstructor-2016pol345/courses/qss-swirl-socraticswirl",
+    RecordFolder = "/tmp/FSI2017"
+  )
+  options(SocraticswirlRStudioServer = rstudioserver)
+
+  invisible()
+}
+
 make_pretty <- function(..., skip_before=TRUE, skip_after=FALSE) {
   wrapped <- strwrap(str_c(..., sep = " "),
                      width = getOption("width") - 2)
