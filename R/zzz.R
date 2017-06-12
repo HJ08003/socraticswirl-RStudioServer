@@ -27,8 +27,8 @@
 .onLoad <- function(libname, pkgname) {
   rstudioserver <- list(
     Instructor = "FSI2017",
-    CourseFolder = "/Users/hubertj/Desktop/NewProject/SocraticSwirl/socraticswirlInstructor-2016pol345/courses/qss-swirl-socraticswirl",
-    RecordFolder = "/tmp/FSI2017"
+    CourseFolder = "/usr/local/R/FSI2017/Courses/qss-swirl-pol345",
+    RecordFolder = "/usr/local/R/FSI2017/Records"
   )
   options(SocraticswirlRStudioServer = rstudioserver)
 
