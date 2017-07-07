@@ -238,9 +238,7 @@ notify_socratic_swirl <- function(e, correct = TRUE) {
                       ACL = socratic_swirl_acl())
 
 
-  print(paste(o$course, o$lesson, o$exercise, o$student, o$instructor, correct, FALSE, answer, socratic_swirl_acl(), sep = "\t"))
-
-  
+  # print(paste(o$course, o$lesson, o$exercise, o$student, o$instructor, correct, FALSE, answer, socratic_swirl_acl(), sep = "\t"))
   # TODO: check that there wasn't an error communicating with the server
   TRUE
 }
