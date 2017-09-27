@@ -263,6 +263,11 @@ write_object_StudentResponse <- function(task, course, lesson, exercise, instruc
   if (task == "StudentResponse") {
     dt <- date()
     BaseDirectory <- file.path(getOption("SocraticswirlRStudioServer")$RecordFolder, student, course, lesson)
+    #
+    # \n and \t may cause a problem in data
+    errorMsg <- gsub("\t", "{tab}", gsub("\n", "{newline}", errorMsg))
+    # command <- gsub("\t", "{tab}", gsub("\n", "{newline}", command))
+    #
     a <- c(course, lesson, exercise, student, instructor, dt, isCorrect, isError, command, errorMsg)
     names(a) <- c("Course", "Lesson", "Exercise", "Student", "Instructor", "Date", "isCorrect", "isError", "Command", "ErrorMassage")
     set_object_Directory(course, lesson, student)
